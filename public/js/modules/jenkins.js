@@ -2,7 +2,7 @@ var jenkins = {
 	
 
 	getWidgetOptionsContent: function(widget) {
-		var content = 'Choose a job to monitor (on ' + widget.options.server + ')';
+		var content = 'Choose a jenkins job to monitor (on ' + widget.options.server + ')';
  		content += "<select id='jobList" + widget.id + "'>";
  		var jobs = widget.options.jobs;
  		for (var jobId in jobs) {

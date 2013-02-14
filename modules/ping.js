@@ -8,7 +8,7 @@ var getValues = function(host, callback) {
     logger.info("Accessing ping.getValues() with option: " + host);
     probe(host, function(data) {
         var result = { host: host , alive: data };
-        logger.info("Result of getValues: " + data);
+        logger.info("Result of ping.getValues: " + data + " (Requested: " + host + ")");
         callback(undefined, result);
     });
 }
@@ -47,5 +47,5 @@ GLOBAL.moduleList.ping = this;
 // We export the needed properties (getValue and getOptions if available)
 
 module.exports.title = "Ping a host or IP";
-exports.getValues = getValues;
-exports.getOptions = getOptions;
+module.exports.getValues = getValues;
+module.exports.getOptions = getOptions;

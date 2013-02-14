@@ -1,4 +1,4 @@
-var config = require('../config')
+var config = require('./jenkins.config')
 	, http = require('http')
 	, logger = GLOBAL.logger || console;
 
@@ -6,7 +6,6 @@ if (config.jenkins.ssl) {
 	http = require('https');
 }
 
-	
 
 var getOptions = function(callback) {
 	logger.info("entering getOptions for Jenkins !");

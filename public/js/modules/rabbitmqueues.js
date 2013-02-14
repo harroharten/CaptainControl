@@ -2,7 +2,7 @@ var rabbitmqueues = {
 	
 
 	getWidgetOptionsContent: function(widget) {
-		var content = 'Choose a job to monitor (on ' + widget.options.server + ')';
+		var content = 'Choose a queue to monitor (on ' + widget.options.server + ')';
  		content += "<select id='queueList" + widget.id + "'>";
  		var queues = widget.options.queues;
  		for (var queueId in queues) {

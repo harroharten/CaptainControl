@@ -85,6 +85,7 @@ $(document).ready( function() {
 			widgetOptionWindow.id = "optionContainer" + widget.id;
 			widgetOptionWindow.dialog('option', 'title', 'Options for ' + $(this).find('a').html());
 			widgetOptionWindow.dialog('open');
+			widgetOptionWindow.html("Loading...");
 			console.log("sending a getOptions event with : ", widget);
 			socket.emit("getOptions", widget);
 		});

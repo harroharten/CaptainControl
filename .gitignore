@@ -11,4 +11,11 @@ pids
 logs
 results
 
+
+node_modules/**/*
 npm-debug.log
+
+
+# Sublime-text specifics
+*sublime-project
+*sublime-workspace

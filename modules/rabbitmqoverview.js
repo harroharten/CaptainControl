@@ -1,23 +1,21 @@
-var config = require('../config')
+var config = require('./rabbitmqoverview.config')
 	, http = require('http')
 	, logger = GLOBAL.logger || console;
 
-	
 
 var getOptions = function(callback) {
-	var serverList = ['s-rmq-01', 's-rmq-02'];
-	callback(undefined, serverList);
+	callback(undefined, config.rabbitmqoverview.serverList);
 }
 
 
 var getValues = function(option, callback) {
-	var username = config.rabbitmq.user;
-	var password = config.rabbitmq.pass;
+	var username = config.rabbitmqoverview.user;
+	var password = config.rabbitmqoverview.pass;
 	var auth = 'Basic ' + new Buffer(username + ':' + password).toString('base64');
 	var options = {
 		host: option.server,
-		port: config.rabbitmq.port,
-		path: '/api/overview/',
+		port: config.rabbitmqoverview.port,
+		path: config.rabbitmqoverview.path,
 		headers: {
 			"Authorization": auth
 		}
@@ -37,12 +35,12 @@ var getValues = function(option, callback) {
 		    if (res.statusCode > 400) {			
 				error = "error status: " + res.statusCode + " while getting rabbitmqoverview result for '" + option.server + "'";
 				logger.error(error);
-			} else {
-				var jsonData = JSON.parse(data);
-				
-				var result = {"result": {name : option.server, data : data }};
-				callback(error, result);
+				return callback(error, undefined);
 			}
+			
+			var jsonData = JSON.parse(data);
+			var result = {"result": {name : option.server, data : data }};
+			callback(error, result);
 		});
 				
 	});

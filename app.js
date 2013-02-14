@@ -7,12 +7,10 @@ var http = require('http')
 	, config = require('./config')
 	, os = require( 'os' )
 	, socketio = require('socket.io')
-	, S = require('string') // http://stringjs.com/
 	, events = require('events')
 	, url = require('url')
 	, winston = require('winston')
 	, db = require('./persistence');
-
 
 /**
 *
@@ -40,25 +38,24 @@ var logger = new (winston.Logger)({
 		new (winston.transports.ClientConsoleLogger)()
 	],
 	exceptionHandlers: [
-		new winston.transports.File({ filename: 'logs/exceptions.log' })
+		new (winston.transports.File)({ filename: 'logs/exceptions.log' })
 	],
 	exitOnError: false
 });
 // Making the logger global to access it from the modules
 GLOBAL.logger = logger;
-
+// TODO: extract it, import it where needed and remove global ?
 
 
 // Setting up a local eventPool
 var serverEventPool = new events.EventEmitter();
 serverEventPool.setMaxListeners(0);
 // Making the eventPool global to access it from the modules
-GLOBAL.serverEventPool = serverEventPool;
+// GLOBAL.serverEventPool = serverEventPool; Not yet, needed for push functionnalities, which are not there yet
 
 
 // Loading all the modules (synchronously of course)
-var moduleFileList = fs.readdirSync(__dirname + '/modules/')
-	, html = fs.readFileSync(__dirname + '/public/index.html');
+var moduleFileList = fs.readdirSync(__dirname + '/modules/');
 
 var moduleList = [];
 var count = 0;
@@ -81,7 +78,7 @@ var server = http.createServer(function(req, res){
 	
 	var parsedUrl = url.parse(req.url, true);
 	var path = parsedUrl.pathname;
-	if (S(path).contains('push')) {
+	if (path.indexOf('push') >= 0) {
 		var query = parsedUrl.query;
 		serverEventPool.emit(query.moduleName + 'Event', 'testPushEvent');
 		res.writeHead(200, {"Content-Type": "text/plain"});
@@ -197,7 +194,6 @@ io.sockets.on('connection', function(socket) {
 
 var getValues = function(widget, callback) {
 	try {
-		logger.info("Entering getValues: ", widget);
 		GLOBAL.moduleList[widget.moduleName].getValues(widget.options, function(error, result) {
 			// TODO : handle errors
 			callback(error, result);
@@ -223,3 +219,4 @@ var launchAllEvent = function() {
 		serverEventPool.emit(module + 'Event');
 	}
 };
+setInterval(launchAllEvent, config.app.reloadTime);

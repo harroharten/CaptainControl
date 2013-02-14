@@ -1,15 +1,15 @@
-var config = require('../config')
+var config = require('./rabbitmqueues.config')
 	, http = require('http')
 	, logger = GLOBAL.logger || console;
 
 	
 var getOptions = function(callback) {
-	var username = config.rabbitmq.user;
-	var password = config.rabbitmq.pass;
+	var username = config.rabbitmqueues.user;
+	var password = config.rabbitmqueues.pass;
 	var auth = 'Basic ' + new Buffer(username + ':' + password).toString('base64');
 	var options = {
-		host: config.rabbitmq.host,
-		port: config.rabbitmq.port,
+		host: config.rabbitmqueues.host,
+		port: config.rabbitmqueues.port,
 		path:'/api/queues',
 		headers: {
 			"Authorization": auth
@@ -26,7 +26,7 @@ var getOptions = function(callback) {
 		res.on('end', function() {
 			var error;
 			if (res.statusCode > 400) {			
-				error = "error status: " + res.statusCode + " while getting RabbitMQ queue list  for '" + config.rabbitmq.host + " " + config.rabbitmq.port + "'";
+				error = "error status: " + res.statusCode + " while getting RabbitMQ queue list  for '" + config.rabbitmqueues.host + " " + config.rabbitmqueues.port + "'";
 				logger.error(error);
 			} else {
 				var jsonData = JSON.parse(data);
@@ -35,7 +35,7 @@ var getOptions = function(callback) {
 				for (var i = 0; i < jsonData.length; i++) {
 					queues.push( jsonData[i].name); 
 				}
-				var result = {server : config.rabbitmq.host + " " + config.rabbitmq.port,
+				var result = {server : config.rabbitmqueues.host + " " + config.rabbitmqueues.port,
 							  queues : queues};
 				callback(error, result);
 			}
@@ -44,13 +44,13 @@ var getOptions = function(callback) {
 }
 
 var getValues = function(option, callback) {
-	var username = config.rabbitmq.user;
-	var password = config.rabbitmq.pass;
+	var username = config.rabbitmqueues.user;
+	var password = config.rabbitmqueues.pass;
 	var auth = 'Basic ' + new Buffer(username + ':' + password).toString('base64');
 	var options = {
-		host: config.rabbitmq.host,
-		port: config.rabbitmq.port,
-		path: '/api/queues/' + config.rabbitmq.vhost + '/' + option.queue,
+		host: config.rabbitmqueues.host,
+		port: config.rabbitmqueues.port,
+		path: '/api/queues/' + config.rabbitmqueues.vhost + '/' + option.queue,
 		headers: {
 			"Authorization": auth
 		}
