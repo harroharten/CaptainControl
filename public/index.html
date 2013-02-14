@@ -1,0 +1,85 @@
+<html>
+	<head>
+	
+		<title>Captain Control</title>
+
+
+	    <!-- Le style ! -->
+    	<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" />
+    	<link href="http://fonts.googleapis.com/css?family=Open+Sans	" rel="stylesheet" />
+	    <link href="css/bootstrap.css" rel="stylesheet">
+	    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+		<link rel="stylesheet" href="css/zxDocking.css" type="text/css"/>
+
+		<!-- Le javascript ! -->
+    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+	    <script type="text/javascript" src="js/util.js"></script>
+	    <script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+		<script type="text/javascript" src="js/dashboard.js"></script>
+
+    	<script type="text/javascript" src="socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="js/eventHandling.js"></script>
+		<style>
+		    body, html{ height:100%; }
+		    .wrapper{
+		    	min-height: 100%;
+			    height: auto !important;
+			    height: 100%;
+			    margin: 0 auto -75px;
+		    }
+		    #push, #footer{ height: 75px;}
+		    #console {border-top: 1px solid #E7E7E7;position:relative;overflow : auto;height:50px;}
+		</style>
+	</head>
+<body>
+	<div class="wrapper">
+		<!-- Navigation bar -->
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="dashboardTitle" href="#" id="titleContainer">No dashboard available</a>
+
+				<ul class="nav pull-right">
+					<li><a href="#" id="addDashboardButton"><i class="icon-th icon-black"></i> Add a dashboard</a></li>
+					<li class="divider-vertical"></li>
+					<li class="dropdown" id="addWidgetListContainer" style="display:none;">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus icon-black"></i> Add a widget <b class="caret"></b></a>
+							<ul class="dropdown-menu" id="addWidgetList">
+							</ul>
+					</li>
+				</ul>
+				</div>
+			</div><!-- /navbar-inner -->
+		</div>
+
+		<div id="dashboardContainer"></div>
+		<div id="createDashboardContainer"><div></div><div></div></div>
+
+	    <div id="widgetColumn">
+	        <ul id="column0" class="column">
+	        </ul>
+	        
+	        <ul id="column1" class="column">
+	        </ul>
+
+	        <ul id="column2" class="column">
+	        </ul>
+	        
+	        <ul id="column3" class="column">
+	        </ul>
+	    </div>
+	    <div id="push"></div>
+	</div>
+	<div id="footer">Console
+		<div id="console"></div>
+	</div>
+</body>
