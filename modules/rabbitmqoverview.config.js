@@ -5,6 +5,6 @@ config.rabbitmqoverview.port = 55672;
 config.rabbitmqoverview.user = 'guest';
 config.rabbitmqoverview.pass = 'guest';
 config.rabbitmqoverview.path = '/api/overview/'
-config.rabbitmqoverview.serverList = ['s-rmq-01', 's-rmq-02'];
+config.rabbitmqoverview.serverList = ['rabbitmqserver1', 'rabbitmqserver1'];
 
 module.exports = config;
