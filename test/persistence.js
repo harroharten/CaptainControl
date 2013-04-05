@@ -2,7 +2,6 @@ before(function(done) {
     require('../server').start();
     done();
 });
-
 describe('service: hello', function() {
 
     // Test #1
